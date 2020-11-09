@@ -5,53 +5,135 @@
 }
 
 <h2>Index</h2>
+<style>
+    .user-profile-image {
+        border: 1px solid #ededed;
+        border-radius: 3px;
+    }
 
+        .user-profile-image img {
+            height: 250px;
+            width: 320px;
+            cursor: pointer;
+        }
 
-@using (Html.BeginForm("Create","Home",FormMethod.Post,new {@class="form-horizontal" }))
+        .user-profile-image:hover .upload-photo {
+            transform: scaleY(1)
+        }
+
+        .user-profile-image .upload-photo {
+            background-color: #242424;
+            opacity: 0.4;
+            width: 92%;
+            height: 70px;
+            position: absolute;
+            bottom: 0;
+            left: 15px;
+            cursor: pointer;
+            transform: scaleY(0);
+            transition: 0.3s;
+            transform-origin: bottom;
+        }
+
+            .user-profile-image .upload-photo:before {
+                content: 'Upload Photo';
+                color: #fff;
+                position: absolute;
+                top: 20px;
+                left: 130px;
+                opacity: 1;
+                font-size: 18px;
+            }
+
+            .user-profile-image .upload-photo img {
+                height: 80px;
+                width: 80px;
+                color: #fff;
+                position: absolute;
+                top: -10px;
+                left: 30px;
+            }
+
+        .user-profile-image .remove-photo {
+            position: absolute;
+            top: 0;
+            right: 15px;
+            border: 2px solid #ddd;
+            padding: 10px;
+            cursor: pointer;
+            transform: scaleY(0);
+            transition: 0.3s;
+            transform-origin: top;
+        }
+
+            .user-profile-image .remove-photo .glyphicon-remove {
+                color: #cbcbcb;
+            }
+
+            .user-profile-image .remove-photo:hover .glyphicon-remove {
+                color: #808080;
+            }
+
+        .user-profile-image:hover .remove-photo {
+            transform: scaleY(1);
+        }
+</style>
+
+@using (Html.BeginForm("Create", "Home", FormMethod.Post, new { @class = "form-horizontal" }))
 {
     @Html.AntiForgeryToken()
-<div class="container">
-    <h4>User Information</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <img src="~/Images/Login.png" class="img-responsive" alt="Alternate Text" />
-        </div>
-        <div class="col-md-8">
+    <div class="container">
+        <h4>User Information</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-3">
+                <div class="user-profile-image">
+                    <input type="file" class="hidden" id="browseImage" />
+                    <img src="~/Images/NoImage_Available.png" class="img-responsive img-circle" alt="Alternate Text" id="userImage" />
 
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    <div class="upload-photo">
+                        <img src="~/Images/browse-folder.png" class="img-responsive" />
+                    </div>
+
+                    <div class="remove-photo">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </div>
                 </div>
             </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            <div class="col-md-9">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 }
 
 <div>
@@ -61,3 +143,29 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+<script src="~/Scripts/jquery-3.4.1.min.js"></script> 
+<script>
+    $("#userImage").click(function () {
+        $("#browseImage").trigger('click');
+    });
+
+    $(".upload-photo").click(function () {
+        $("#browseImage").trigger('click');
+    });
+
+    $('#browseImage').change(function () {
+
+        if (this.files && this.files[0]) {
+            var fileReader = new FileReader();
+            fileReader.readAsDataURL(this.files[0]);
+
+            fileReader.onload = function (x) {
+                $("#userImage").attr('src', x.target.result);
+            }
+        }
+    });
+
+    $(".remove-photo").click(function () {
+        $("#userImage").attr('src', "/Images/NoImage_Available.png");
+    })
+</script>
